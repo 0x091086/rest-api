@@ -29,3 +29,29 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           build-args: |
             APP_ENV=${{ secrets.APP_ENV }}
+
+  test:
+    name: Run tests
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: run test
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      
+
+      - name: install deps
+        run: npm install
+      - name: run test
+        run: npm run test
+      
+      #- name: Test succeded?
+      #  if: ${{ success() }}
+      #  run: echo "Test Succeded!!!"
+
+      #- name: Test failed?
+      #  if: ${{ failure() }}
+      #  run: |
+      #    curl -X POST -H 'Content-type: application/json' --data '{"text":"${{ env.IMAGE_NAME }} test failed"}' ${{ secrets.SLACK_WEBHOOK_URL }}
