@@ -14,7 +14,7 @@ RUN npm install --legacy-peer-deps
 RUN npm prune --omit=dev --legacy-peer-deps && node-prune
 
 #----------------RELEASE-----------------
-FROM node:20-alpine3.18 AS release
+FROM node:26-alpine3.23 AS release
 RUN apk add dumb-init
 
 USER node
